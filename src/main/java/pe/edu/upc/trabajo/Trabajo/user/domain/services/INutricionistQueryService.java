@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface INutricionistQueryService {
     Optional<Nutricionist> handle(GetNutricionistByIdQuery query);
     List<Nutricionist> handle(GetAllNutricionistsQuery query);
+
 }

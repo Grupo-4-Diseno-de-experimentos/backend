@@ -29,12 +29,7 @@ public class UserQueryService implements IUserQueryService {
         return userRepository.findAll();
     }
 
-    @Override
-    public Optional<User> handle(GetUserByEmailAndPasswordQuery query) {
-        var userList = userRepository.findByEmailAndPassword(query.email(), query.password());
-        if(userList.size() == 1){
-            return Optional.of(userList.getFirst());
-        }
-        return userList.getFirst() == null ? Optional.empty() : Optional.of(userList.getFirst());
+    public User handle(GetUserByEmailAndPasswordQuery query) {
+        return userRepository.findByEmailAndPassword(query.email(), query.password());
     }
 }

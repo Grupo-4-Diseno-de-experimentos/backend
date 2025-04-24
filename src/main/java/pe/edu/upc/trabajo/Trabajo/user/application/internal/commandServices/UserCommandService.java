@@ -21,6 +21,10 @@ public class UserCommandService implements IUserCommandService {
 
     @Override
     public Optional<User> handle(RegisterUserCommand command) {
+        Optional<User> existingUser = userRepository.searchByEmailAndPassword(command.email(), command.password());
+        if (existingUser.isPresent()) {
+            return Optional.empty();
+        }
         User user = new User(command);
         try{
             var response = userRepository.save(user);

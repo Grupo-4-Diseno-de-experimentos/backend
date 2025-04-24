@@ -1,5 +1,6 @@
 package pe.edu.upc.trabajo.Trabajo.user.interfaces.rest;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,9 @@ import pe.edu.upc.trabajo.Trabajo.user.interfaces.rest.resources.UserResource;
 import pe.edu.upc.trabajo.Trabajo.user.interfaces.rest.transformers.CreateUserCommandFromResourceAssembler;
 import pe.edu.upc.trabajo.Trabajo.user.interfaces.rest.transformers.UserResourceFromEntityAssembler;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -30,12 +33,18 @@ public class UserController {
         this.userCommandService = userCommandService;
     }
 
-    @PostMapping(value = "/login")
-    public ResponseEntity<Optional<User>> login(@RequestBody LoginCommand loginCommand){
+    @PostMapping("/login")
+    public ResponseEntity<?> getUserByEmailAndPassword(@Valid @RequestBody LoginCommand loginCommand) {
         var getUserQuery = new GetUserByEmailAndPasswordQuery(loginCommand.email(), loginCommand.password());
         var user = userQueryService.handle(getUserQuery);
-        if (user == null) { return ResponseEntity.notFound().build(); }
-        return ResponseEntity.ok(user);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Datos incorrectos");
+        }
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Login exitoso");
+        response.put("user", user);
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping()
@@ -47,9 +56,15 @@ public class UserController {
         return ResponseEntity.ok(usersResources);
     }
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody CreateUserResource createUserResource) {
+    public ResponseEntity<?> createUser(@Valid @RequestBody CreateUserResource createUserResource) {
         var createUserCommand = CreateUserCommandFromResourceAssembler.toCommandFromResource(createUserResource);
         var user = userCommandService.handle(createUserCommand);
+
+        if (user.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("Usuario ya existente");
+        }
+
         return user.map(u -> new ResponseEntity<>(u, HttpStatus.CREATED)).orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 

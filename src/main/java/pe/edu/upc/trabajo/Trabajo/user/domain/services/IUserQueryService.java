@@ -11,6 +11,5 @@ import java.util.Optional;
 public interface IUserQueryService {
     Optional<User> handle(GetUserByIdQuery query);
     List<User> handle(GetAllUsersQuery query);
-    Optional<User> handle(GetUserByEmailAndPasswordQuery query);
 
 }

@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pe.edu.upc.trabajo.Trabajo.user.application.internal.queryServices.NutricionistQueryService;
+import pe.edu.upc.trabajo.Trabajo.user.domain.model.commands.RegisterNutricionistCommand;
 import pe.edu.upc.trabajo.Trabajo.user.domain.model.entities.Nutricionist;
 import pe.edu.upc.trabajo.Trabajo.user.infrastructure.repositories.jpa.INutricionistRepository;
 
@@ -26,10 +27,9 @@ public class NutricionistServiceTest {
     void shouldReturnNutricionistWhenCodeIsValid() {
         // Arrange
         String code = "ABC123";
-        Nutricionist expected = new Nutricionist();
+        RegisterNutricionistCommand command = new RegisterNutricionistCommand("Carlos", "Apellido", code);
+        Nutricionist expected = new Nutricionist(command);
         expected.setId(1L);
-        expected.setName("Carlos");
-        expected.setCode(code);
 
         Mockito.when(repository.findByCode(code)).thenReturn(Optional.of(expected));
 

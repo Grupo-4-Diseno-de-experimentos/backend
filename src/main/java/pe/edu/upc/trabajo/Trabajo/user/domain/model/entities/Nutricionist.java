@@ -4,26 +4,22 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = "users")
-public class User {
+@Table(name = "nutricionist")
+public class Nutricionist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String lastName;
-    private String email;
-    private String password;
+    private String code;
 
-    public User(Long id, String name, String lastName, String email, String password) {
+    public Nutricionist(Long id, String name, String lastName, String code) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
-        this.email = email;
-        this.password = password;
+        this.code = code;
     }
 }

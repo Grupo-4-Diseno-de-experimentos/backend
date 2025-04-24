@@ -5,37 +5,33 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pe.edu.upc.trabajo.Trabajo.user.domain.model.commands.RegisterNutricionistCommand;
 import pe.edu.upc.trabajo.Trabajo.user.domain.model.commands.RegisterUserCommand;
-
-import java.time.LocalDateTime;
 
 @Data
 @Entity
 @NoArgsConstructor
-@Table(name = "users")
 @Getter
 @Setter
-public class User {
+@Table(name = "nutricionist")
+public class Nutricionist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String lastName;
-    private String email;
-    private String password;
+    private String code;
 
-    public User(Long id, String name, String lastName, String email, String password) {
+    public Nutricionist(Long id, String name, String lastName, String code) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
-        this.email = email;
-        this.password = password;
+        this.code = code;
     }
-    public User(RegisterUserCommand command){
+    public Nutricionist(RegisterNutricionistCommand command){
         this.name = command.name();;
         this.lastName = command.lastName();
-        this.email = command.email();
-        this.password = command.password();
+        this.code = command.code();
     }
 
     public Long getId() {
@@ -50,12 +46,8 @@ public class User {
         return lastName;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
+    public String getCode() {
+        return code;
     }
 
     public void setId(Long id) {
@@ -70,11 +62,7 @@ public class User {
         this.lastName = lastName;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setCode(String code) {
+        this.code = code;
     }
 }

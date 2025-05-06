@@ -6,15 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pe.edu.upc.trabajo.Trabajo.user.domain.model.commands.RegisterUserCommand;
+import pe.edu.upc.trabajo.Trabajo.user.domain.model.typeObject.Role;
 
 import java.time.LocalDateTime;
 
 @Data
 @Entity
-@NoArgsConstructor
 @Table(name = "users")
-@Getter
-@Setter
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +22,12 @@ public class User {
     private String email;
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    public User(){
+
+    }
     public User(Long id, String name, String lastName, String email, String password) {
         this.id = id;
         this.name = name;
@@ -36,6 +40,7 @@ public class User {
         this.lastName = command.lastName();
         this.email = command.email();
         this.password = command.password();
+        this.role = Role.USER;
     }
 
     public Long getId() {
@@ -76,5 +81,9 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
     }
 }

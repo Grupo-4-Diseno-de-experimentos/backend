@@ -1,4 +1,4 @@
 package pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.commands;
 
-public record CreateTemplateCommand() {
+public record DeleteMealPlanRecipeCommand(Long mealPlanRecipeId) {
 }

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pe.edu.upc.trabajo.Trabajo.user.domain.model.entities.Nutricionist;
 import pe.edu.upc.trabajo.Trabajo.user.domain.model.entities.User;
 
 @Data
@@ -22,7 +23,7 @@ public class Recipe {
     private Long calories;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "nutricionist_id")
+    private Nutricionist nutricionist;
 
 }

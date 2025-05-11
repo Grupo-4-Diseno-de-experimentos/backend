@@ -29,7 +29,8 @@ public class Nutricionist {
     @JoinColumn(name = "user_id")
     private User user;
 
-
+    public Nutricionist(){
+    }
 
     public Nutricionist(Long id, String name, String lastName, String code) {
         this.id = id;

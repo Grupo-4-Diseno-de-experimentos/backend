@@ -19,4 +19,17 @@ public class MealPlanRecipe {
     @ManyToOne
     @JoinColumn(name = "meal_plan_id")
     private MealPlan mealPlan;
+
+    public MealPlanRecipe(){
+
+    }
+    public MealPlanRecipe(Long id, String day, String mealTime, Recipe recipe, MealPlan mealPlan) {
+        this.id = id;
+        this.day = day;
+        this.mealTime = mealTime;
+        this.recipe = recipe;
+        this.mealPlan = mealPlan;
+    }
+
+
 }

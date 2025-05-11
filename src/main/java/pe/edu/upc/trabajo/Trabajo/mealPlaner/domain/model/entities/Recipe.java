@@ -10,7 +10,6 @@ import pe.edu.upc.trabajo.Trabajo.user.domain.model.entities.User;
 
 @Data
 @Entity
-@NoArgsConstructor
 @Getter
 @Setter
 public class Recipe {
@@ -26,4 +25,16 @@ public class Recipe {
     @JoinColumn(name = "nutricionist_id")
     private Nutricionist nutricionist;
 
+    public Recipe(){
+
+    }
+
+    public Recipe(Long id, Long title, String description, String instructions, Long calories, Nutricionist nutricionist) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.instructions = instructions;
+        this.calories = calories;
+        this.nutricionist = nutricionist;
+    }
 }

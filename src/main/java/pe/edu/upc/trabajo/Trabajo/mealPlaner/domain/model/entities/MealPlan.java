@@ -45,6 +45,8 @@ public class MealPlan {
     @OneToMany(mappedBy = "mealPlan", cascade = CascadeType.ALL)
     private List<MealPlanRecipe> mealPlanRecipes;
 
+    public MealPlan(){
+    }
     public MealPlan(Long id, String name, String category, String description, Goal goal, Float min_bmi, Float max_bmi, Long min_age, Long max_age, Long calories_per_d, Nutricionist nutricionist) {
         this.id = id;
         this.name = name;

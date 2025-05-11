@@ -26,10 +26,7 @@ public class MealPlanCommandService implements IMealPlansCommandService {
     @Override
     public Optional<MealPlan> handle(CreateMealPlanCommand command) {
         try {
-            Optional<Nutricionist> nutricionist = nutricionistRepository.findById(command.nutricionistId());
-            if (nutricionist.isEmpty()) return Optional.empty();
-
-            MealPlan mealPlan = new MealPlan(command, nutricionist.get());
+            MealPlan mealPlan = new MealPlan(command);
             MealPlan saved = mealPlanRepository.save(mealPlan);
             return Optional.of(saved);
 

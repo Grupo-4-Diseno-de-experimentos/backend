@@ -10,6 +10,5 @@ public record CreateMealPlanCommand(String name,
                                     Float max_bmi,
                                     Long min_age,
                                     Long max_age,
-                                    Long calories_per_d,
-                                    Long nutricionistId) {
+                                    Long calories_per_d) {
 }

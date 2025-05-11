@@ -14,7 +14,6 @@ import java.util.List;
 
 @Data
 @Entity
-@NoArgsConstructor
 @Table(name = "mealPlan")
 @Getter
 @Setter
@@ -47,7 +46,7 @@ public class MealPlan {
 
     public MealPlan(){
     }
-    public MealPlan(Long id, String name, String category, String description, Goal goal, Float min_bmi, Float max_bmi, Long min_age, Long max_age, Long calories_per_d, Nutricionist nutricionist) {
+    public MealPlan(Long id, String name, String category, String description, Goal goal, Float min_bmi, Float max_bmi, Long min_age, Long max_age, Long calories_per_d) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -58,10 +57,9 @@ public class MealPlan {
         this.min_age = min_age;
         this.max_age = max_age;
         this.calories_per_d = calories_per_d;
-        this.nutricionist = nutricionist;
     }
 
-    public MealPlan(CreateMealPlanCommand command, Nutricionist nutricionist){
+    public MealPlan(CreateMealPlanCommand command){
         this.name = command.name();
         this.category = command.category();
         this.description = command.description();
@@ -71,7 +69,6 @@ public class MealPlan {
         this.min_age = command.min_age();
         this.max_age = command.max_age();
         this.calories_per_d = command.calories_per_d();
-        this.nutricionist = nutricionist;
     }
 
     public void updateMealPlanCommand(UpdateMealPlanCommand command){

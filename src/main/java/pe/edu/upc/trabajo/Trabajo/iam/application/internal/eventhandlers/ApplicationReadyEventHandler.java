@@ -1,7 +1,7 @@
 package pe.edu.upc.trabajo.Trabajo.iam.application.internal.eventhandlers;
 
-import com.acme.center.platform.iam.domain.model.commands.SeedRolesCommand;
-import com.acme.center.platform.iam.domain.services.RoleCommandService;
+import pe.edu.upc.trabajo.Trabajo.iam.domain.model.commands.SeedRolesCommand;
+import pe.edu.upc.trabajo.Trabajo.iam.domain.services.RoleCommandService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;

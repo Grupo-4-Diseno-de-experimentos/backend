@@ -21,6 +21,16 @@ public class Nutricionist {
     private String name;
     private String lastName;
     private String code;
+    private String description;
+    private String specialties;
+    private Long yearsExperience;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public Nutricionist(){
+    }
 
     public Nutricionist(Long id, String name, String lastName, String code) {
         this.id = id;

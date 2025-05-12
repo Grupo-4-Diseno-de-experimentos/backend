@@ -5,7 +5,7 @@ import pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.typeObject.Goal;
 public record CreateMealPlanerResource(String name,
                                        String category,
                                        String description,
-                                       Goal goal,
+                                       String goal,
                                        Float min_bmi,
                                        Float max_bmi,
                                        Long min_age,

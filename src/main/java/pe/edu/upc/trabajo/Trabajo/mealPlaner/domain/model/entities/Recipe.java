@@ -40,19 +40,6 @@ public class Recipe {
 
     }
 
-    public Recipe(CreateRecipeCommand command){
-        this.title = command.title();
-        this.description = command.description();
-        this.instructions = command.instructions();
-        this.calories = command.calories();
-    }
-    public void updateRecipeCommand(UpdateRecipeCommand command){
-        this.title = command.title();
-        this.description = command.description();
-        this.instructions = command.instructions();
-        this.calories = command.calories();
-    }
-
     public Long getId() {
         return id;
     }

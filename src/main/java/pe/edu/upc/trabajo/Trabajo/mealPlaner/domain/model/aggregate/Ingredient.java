@@ -1,9 +1,10 @@
 package pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.aggregate;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.entities.Recipe;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Ingredient {
@@ -19,12 +20,14 @@ public class Ingredient {
     private String category;
     private Boolean available;
 
+    @ManyToMany(mappedBy = "ingredients")
+    private List<Recipe> recipes = new ArrayList<>();
+
     public Ingredient(){
 
     }
 
-    public Ingredient(Long id, String name, Float quantity, Float calories, Float carbs, Float protein, Float fats, String category, Boolean available) {
-        this.id = id;
+    public Ingredient(String name, Float quantity, Float calories, Float carbs, Float protein, Float fats, String category, Boolean available) {
         this.name = name;
         this.quantity = quantity;
         this.calories = calories;

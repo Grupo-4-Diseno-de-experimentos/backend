@@ -4,5 +4,8 @@ public record UpdateRecipeCommand(Long recipeId,
                                   String title,
                                   String description,
                                   String instructions,
-                                  Long calories) {
+                                  Long calories,
+                                  Double carbs,
+                                  Double protein,
+                                  Double fats) {
 }

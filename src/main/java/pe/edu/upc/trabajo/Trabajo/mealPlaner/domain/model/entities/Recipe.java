@@ -5,10 +5,15 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.aggregate.Ingredient;
+import pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.aggregate.Macros;
 import pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.commands.CreateRecipeCommand;
 import pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.commands.UpdateRecipeCommand;
 import pe.edu.upc.trabajo.Trabajo.user.domain.model.entities.Nutricionist;
 import pe.edu.upc.trabajo.Trabajo.user.domain.model.entities.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -27,18 +32,48 @@ public class Recipe {
     @JoinColumn(name = "nutricionist_id")
     private Nutricionist nutricionist;
 
+    @Embedded
+    private Macros macros;
+
+    @ManyToMany
+    @JoinTable(
+            name = "recipe_ingredient",
+            joinColumns = @JoinColumn(name = "recipe_id"),
+            inverseJoinColumns = @JoinColumn(name = "ingredient_id")
+    )
+    private List<Ingredient> ingredients;
+
     public Recipe(){
 
     }
 
-    public Recipe(Long id, String title, String description, String instructions, Long calories) {
+    public Recipe(Long id, String title, String description, String instructions, Long calories, Macros macros,List<Ingredient> ingredients) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.instructions = instructions;
         this.calories = calories;
+        this.macros = macros;
+        this.ingredients = ingredients;
 
     }
+
+    public Recipe(CreateRecipeCommand command, List<Ingredient> ingredients){
+        this.title = command.title();
+        this.description = command.description();
+        this.instructions = command.instructions();
+        this.calories = command.calories();
+        this.macros = new Macros(command.carbs(), command.protein(), command.fats());
+        this.ingredients = ingredients;
+    }
+    public void updateRecipeCommand(UpdateRecipeCommand command){
+        this.title = command.title();
+        this.description = command.description();
+        this.instructions = command.instructions();
+        this.calories = command.calories();
+        this.macros = new Macros(command.carbs(), command.protein(), command.fats());
+    }
+
 
     public Long getId() {
         return id;
@@ -78,5 +113,21 @@ public class Recipe {
 
     public void setCalories(Long calories) {
         this.calories = calories;
+    }
+
+    public Macros getMacros() {
+        return macros;
+    }
+
+    public void setMacros(Macros macros) {
+        this.macros = macros;
+    }
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 }

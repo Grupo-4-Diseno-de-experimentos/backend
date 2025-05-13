@@ -5,6 +5,6 @@ import pe.edu.upc.trabajo.Trabajo.mealPlaner.interfaces.rest.resources.CreateRec
 
 public class CreateRecipeCommandFromResourceAssembler {
     public static CreateRecipeCommand toCommandFromResource(CreateRecipeResource resource){
-        return new CreateRecipeCommand(resource.title(), resource.description(), resource.instructions(), resource.calories(), resource.carbs(), resource.protein(), resource.fats(),resource.ingredientIds());
+        return new CreateRecipeCommand(resource.title(), resource.description(), resource.instructions(), resource.calories(), resource.macros().getCarbs(), resource.macros().getProtein(), resource.macros().getFats(), resource.ingredientIds());
     }
 }

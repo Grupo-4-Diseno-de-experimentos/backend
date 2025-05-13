@@ -29,7 +29,9 @@ public class RecipeCommandService implements IRecipeCommandService {
     @Override
     public Optional<Recipe> handle(CreateRecipeCommand command) {
         try {
-            List<Ingredient> ingredients = command.ingredientIds().stream()
+            List<Ingredient> ingredients = Optional.ofNullable(command.ingredientIds())
+                    .orElse(List.of())
+                    .stream()
                     .map(id -> ingredientRepository.findById(id)
                             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ingrediente no encontrado: " + id)))
                     .toList();

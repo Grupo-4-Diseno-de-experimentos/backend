@@ -26,6 +26,7 @@ public class RecipeController {
 
     @PostMapping
     public ResponseEntity<?> createRecipe(@RequestBody CreateRecipeResource resource){
+        System.out.println("📥 Resource recibido: " + resource);
         var createRecipeCommand = CreateRecipeCommandFromResourceAssembler.toCommandFromResource(resource);
         var recipe = recipeCommandService.handle(createRecipeCommand);
 

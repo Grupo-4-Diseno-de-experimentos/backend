@@ -10,4 +10,7 @@ public record CreateRecipeCommand(String title,
                                   Double protein,
                                   Double fats,
                                   List<Long> ingredientIds) {
+    public CreateRecipeCommand {
+        ingredientIds = ingredientIds == null ? List.of() : ingredientIds;
+    }
 }

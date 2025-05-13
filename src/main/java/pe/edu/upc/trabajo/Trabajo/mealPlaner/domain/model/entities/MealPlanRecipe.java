@@ -2,7 +2,7 @@ package pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.entities;
 
 import jakarta.persistence.*;
 import pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.typeObject.Day;
-import pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.typeObject.MealTime;
+import pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.typeObject.Mealtime;
 
 @Entity
 @Table(name = "meal_plan_recipes")
@@ -14,7 +14,7 @@ public class MealPlanRecipe {
     @Enumerated(EnumType.STRING)
     private Day day;
     @Enumerated(EnumType.STRING)
-    private MealTime mealTime;
+    private Mealtime mealTime;
 
     @ManyToOne
     @JoinColumn(name = "recipe_id")
@@ -28,11 +28,43 @@ public class MealPlanRecipe {
 
     }
 
-    public MealPlanRecipe(Long id, Day day, MealTime mealTime, Recipe recipe, MealPlan mealPlan) {
+    public MealPlanRecipe(Long id, Day day, Mealtime mealTime, Recipe recipe, MealPlan mealPlan) {
         this.id = id;
         this.day = day;
         this.mealTime = mealTime;
         this.recipe = recipe;
+        this.mealPlan = mealPlan;
+    }
+
+    public Day getDay() {
+        return day;
+    }
+
+    public void setDay(Day day) {
+        this.day = day;
+    }
+
+    public Mealtime getMealTime() {
+        return mealTime;
+    }
+
+    public void setMealTime(Mealtime mealTime) {
+        this.mealTime = mealTime;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
+    }
+
+    public MealPlan getMealPlan() {
+        return mealPlan;
+    }
+
+    public void setMealPlan(MealPlan mealPlan) {
         this.mealPlan = mealPlan;
     }
 }

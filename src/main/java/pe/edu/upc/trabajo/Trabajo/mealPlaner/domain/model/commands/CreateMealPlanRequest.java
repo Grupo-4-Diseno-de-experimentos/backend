@@ -1,26 +1,29 @@
 package pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.commands;
 
+import pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.typeObject.Day;
+import pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.typeObject.Goal;
+
 import java.util.List;
 
 public record CreateMealPlanRequest(
         String name,
         String category,
-        String goal,
         String description,
-        Double minBmi,
-        Double maxBmi,
-        Integer minAge,
-        Integer maxAge,
-        Integer caloriesPerDay,
-        List<DayMealGroup> recipesByDay
+        Goal goal,
+        Float min_bmi,
+        Float max_bmi,
+        Long min_age,
+        Long max_age,
+        Long calories_per_day,
+        List<RecipeDayDTO> recipesByDay
 ) {
-    public record DayMealGroup(
+    public record RecipeDayDTO(
             String day,
-            List<MealEntry> meals
+            List<MealDTO> meals
     ) {}
 
-    public record MealEntry(
-            String mealTime,
-            Long recipeId
+    public record MealDTO(
+            String meal_time,
+            Long recipe_id
     ) {}
 }

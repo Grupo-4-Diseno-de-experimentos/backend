@@ -2,13 +2,12 @@ package pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.typeObject;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-public enum MealTime {
+public enum Mealtime {
     Desayuno,
     Almuerzo,
     Cena;
-
     @JsonCreator
-    public static MealTime fromString(String value) {
+    public static Mealtime fromString(String value) {
         switch (value.toLowerCase()) {
             case "breakfast":
                 return Desayuno;
@@ -17,7 +16,7 @@ public enum MealTime {
             case "dinner":
                 return Cena;
             default:
-                throw new IllegalArgumentException("Unknown value: " + value);
+                throw new IllegalArgumentException("Unknown mealtime: " + value);
         }
     }
 }

@@ -10,7 +10,6 @@ import pe.edu.upc.trabajo.Trabajo.user.domain.model.commands.RegisterUserCommand
 
 @Data
 @Entity
-@NoArgsConstructor
 @Getter
 @Setter
 @Table(name = "nutricionist")

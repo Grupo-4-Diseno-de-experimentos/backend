@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.trabajo.Trabajo.mealPlaner.application.internal.RecipeIngredientService;
+import pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.entities.RecipeIngredient;
 import pe.edu.upc.trabajo.Trabajo.mealPlaner.interfaces.rest.resources.CreateRecipeIngredientResource;
 import pe.edu.upc.trabajo.Trabajo.mealPlaner.interfaces.rest.resources.RecipeIngredientResponse;
 import pe.edu.upc.trabajo.Trabajo.mealPlaner.interfaces.rest.resources.UpdateRecipeIngredientResource;
@@ -24,23 +25,22 @@ public class RecipeIngredientController {
         this.recipeService = recipeService;
     }
 
-    @GetMapping
-    public List<RecipeIngredientResponse> getIngredientsByRecipeId(@RequestParam Long recipe_id) {
-        return recipeService.getIngredientsByRecipeId(recipe_id);
+    @GetMapping("/{id}")
+    public ResponseEntity<List<RecipeIngredientResponse>> getRecipeIngredientsByRecipeId(@PathVariable Long id) {
+        List<RecipeIngredient> recipeIngredients = recipeService.getRecipeIngredientsByRecipeId(id);
+        List<RecipeIngredientResponse> responseList = recipeIngredients.stream()
+                .map(RecipeIngredientResponseAssembler::toResourceFromEntity)
+                .toList();
+        return ResponseEntity.ok(responseList);
     }
     @PostMapping
     public ResponseEntity<?> create(@RequestBody CreateRecipeIngredientResource resource) {
         var command = CreateRecipeIngredientCommandFromResourceAssembler.toCommandFromResource(resource);
         var recipeIngredient = recipeService.create(command);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(
-                new RecipeIngredientResponse(
-                        recipeIngredient.getId(),
-                        recipeIngredient.getRecipe().getId(),
-                        recipeIngredient.getIngredient().getId(),
-                        recipeIngredient.getQuantity()
-                )
-        );
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(RecipeIngredientResponseAssembler.toResourceFromEntity(recipeIngredient));
     }
 
     @PutMapping("/{id}")
@@ -48,14 +48,8 @@ public class RecipeIngredientController {
         var command = UpdateRecipeIngredientCommandFromResourceAssembler.toCommandFromResource(id, resource);
         var updated = recipeService.update(command);
 
-        return ResponseEntity.ok(new RecipeIngredientResponse(
-                updated.getId(),
-                updated.getRecipe().getId(),
-                updated.getIngredient().getId(),
-                updated.getQuantity()
-        ));
+        return ResponseEntity.ok(RecipeIngredientResponseAssembler.toResourceFromEntity(updated));
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         recipeService.delete(id);

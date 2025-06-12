@@ -12,6 +12,7 @@ import pe.edu.upc.trabajo.Trabajo.mealPlaner.infrastructure.repositories.jpa.IRe
 import pe.edu.upc.trabajo.Trabajo.mealPlaner.interfaces.rest.resources.RecipeIngredientResponse;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,17 +30,8 @@ public class RecipeIngredientService {
         this.ingredientRepository = ingredientRepository;
     }
 
-    public List<RecipeIngredientResponse> getIngredientsByRecipeId(Long recipeId) {
-        List<RecipeIngredient> recipeIngredients = recipeIngredientRepository.findByRecipeId(recipeId);
-
-        return recipeIngredients.stream()
-                .map(ri -> new RecipeIngredientResponse(
-                        ri.getId(),
-                        ri.getRecipe().getId(),
-                        ri.getIngredient().getId(),
-                        ri.getQuantity()
-                ))
-                .collect(Collectors.toList());
+    public List<RecipeIngredient> getRecipeIngredientsByRecipeId(Long recipeId) {
+        return recipeIngredientRepository.findByRecipeId(recipeId);
     }
     public RecipeIngredient create(CreateRecipeIngredientCommand command) {
         var recipe = recipeRepository.findById(command.recipe_id())

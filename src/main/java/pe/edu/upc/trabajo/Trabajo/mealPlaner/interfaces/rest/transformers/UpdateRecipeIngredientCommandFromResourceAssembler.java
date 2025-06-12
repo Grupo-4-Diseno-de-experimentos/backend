@@ -6,8 +6,7 @@ import pe.edu.upc.trabajo.Trabajo.mealPlaner.interfaces.rest.resources.UpdateRec
 public class UpdateRecipeIngredientCommandFromResourceAssembler{
     public static UpdateRecipeIngredientCommand toCommandFromResource(Long id, UpdateRecipeIngredientResource resource) {
         return new UpdateRecipeIngredientCommand(
-                id,
-                resource.quantity()
+                id, resource.recipe_id(), resource.ingredient_id(), resource.quantity()
         );
     }
 }

@@ -12,6 +12,7 @@ import pe.edu.upc.trabajo.Trabajo.mealPlaner.interfaces.rest.transformers.Create
 import pe.edu.upc.trabajo.Trabajo.mealPlaner.interfaces.rest.transformers.RecipeIngredientResponseAssembler;
 import pe.edu.upc.trabajo.Trabajo.mealPlaner.interfaces.rest.transformers.UpdateRecipeIngredientCommandFromResourceAssembler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -34,13 +35,17 @@ public class RecipeIngredientController {
         return ResponseEntity.ok(responseList);
     }
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody CreateRecipeIngredientResource resource) {
-        var command = CreateRecipeIngredientCommandFromResourceAssembler.toCommandFromResource(resource);
-        var recipeIngredient = recipeService.create(command);
+    public ResponseEntity<?> create(@RequestBody List<CreateRecipeIngredientResource> resources) {
+        var savedIngredients = new ArrayList<>();
+        for (CreateRecipeIngredientResource resource : resources) {
+            var command = CreateRecipeIngredientCommandFromResourceAssembler.toCommandFromResource(resource);
+            var recipeIngredient = recipeService.create(command);
+            savedIngredients.add(RecipeIngredientResponseAssembler.toResourceFromEntity(recipeIngredient));
+        }
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(RecipeIngredientResponseAssembler.toResourceFromEntity(recipeIngredient));
+                .body(savedIngredients);
     }
 
     @PutMapping("/{id}")

@@ -50,8 +50,18 @@ public class RecipeIngredientService {
     public RecipeIngredient update(UpdateRecipeIngredientCommand command) {
         var recipeIngredient = recipeIngredientRepository.findById(command.id())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "RecipeIngredient not found"));
-
+        if (command.recipe_id() != null && !recipeIngredient.getRecipe().getId().equals(command.recipe_id())) {
+            var recipe = recipeRepository.findById(command.recipe_id())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Recipe not found"));
+            recipeIngredient.setRecipe(recipe);
+        }
+        if (command.ingredient_id() != null && !recipeIngredient.getIngredient().getId().equals(command.ingredient_id())) {
+            var ingredient = ingredientRepository.findById(command.ingredient_id())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ingredient not found"));
+            recipeIngredient.setIngredient(ingredient);
+        }
         recipeIngredient.setQuantity(command.quantity());
+
         return recipeIngredientRepository.save(recipeIngredient);
     }
 

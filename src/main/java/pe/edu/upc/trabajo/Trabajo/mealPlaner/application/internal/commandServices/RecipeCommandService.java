@@ -12,6 +12,7 @@ import pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.services.IRecipeCommandServi
 import pe.edu.upc.trabajo.Trabajo.mealPlaner.infrastructure.repositories.jpa.IIngredientRepository;
 import pe.edu.upc.trabajo.Trabajo.mealPlaner.infrastructure.repositories.jpa.IRecipeRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,16 +53,28 @@ public class RecipeCommandService implements IRecipeCommandService {
     public Optional<Recipe> handle(UpdateRecipeCommand command) {
         Optional<Recipe> existing = recipeRepository.findById(command.recipeId());
 
-        if (existing.isEmpty()) return Optional.empty();
+        if (existing.isEmpty()) {
+            return Optional.empty();
+        }
+
+        List<Ingredient> ingredients = Optional.ofNullable(command.ingredientIds())
+                .orElse(List.of())
+                .stream()
+                .map(id -> {
+                    return ingredientRepository.findById(id)
+                            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ingrediente no encontrado: " + id));
+                })
+                .toList();
 
         Recipe recipe = existing.get();
-        recipe.updateRecipeCommand(command);
+
+        recipe.updateRecipeCommand(command, new ArrayList<>(ingredients));
 
         try {
             Recipe updated = recipeRepository.save(recipe);
             return Optional.of(updated);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
             return Optional.empty();
         }
     }

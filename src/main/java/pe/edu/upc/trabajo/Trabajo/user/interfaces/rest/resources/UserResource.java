@@ -8,6 +8,10 @@ public record UserResource(
         String lastname,
         String email,
         String password,
-        Role role
+        Role role,
+        String code,
+        String description,
+        String specialties,
+        Long yearsExperience
 ) {
 }

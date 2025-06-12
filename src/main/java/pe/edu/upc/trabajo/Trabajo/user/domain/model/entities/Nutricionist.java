@@ -5,12 +5,9 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pe.edu.upc.trabajo.Trabajo.user.domain.model.commands.RegisterNutricionistCommand;
-import pe.edu.upc.trabajo.Trabajo.user.domain.model.commands.RegisterUserCommand;
 
 @Data
 @Entity
-@NoArgsConstructor
 @Getter
 @Setter
 @Table(name = "nutricionist")
@@ -38,12 +35,6 @@ public class Nutricionist {
         this.lastName = lastName;
         this.code = code;
     }
-    public Nutricionist(RegisterNutricionistCommand command){
-        this.name = command.name();;
-        this.lastName = command.lastName();
-        this.code = command.code();
-    }
-
     public Long getId() {
         return id;
     }
@@ -70,6 +61,38 @@ public class Nutricionist {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getSpecialties() {
+        return specialties;
+    }
+
+    public void setSpecialties(String specialties) {
+        this.specialties = specialties;
+    }
+
+    public Long getYearsExperience() {
+        return yearsExperience;
+    }
+
+    public void setYearsExperience(Long yearsExperience) {
+        this.yearsExperience = yearsExperience;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public void setCode(String code) {

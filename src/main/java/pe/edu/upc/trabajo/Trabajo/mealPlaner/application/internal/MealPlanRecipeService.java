@@ -15,6 +15,7 @@ import pe.edu.upc.trabajo.Trabajo.mealPlaner.infrastructure.repositories.jpa.IMe
 import pe.edu.upc.trabajo.Trabajo.mealPlaner.infrastructure.repositories.jpa.IRecipeRepository;
 
 import java.time.DayOfWeek;
+import java.util.Optional;
 
 @Service
 public class MealPlanRecipeService {
@@ -52,6 +53,21 @@ public class MealPlanRecipeService {
         this.mealPlanRecipeRepository = mealPlanRecipeRepository;
         this.recipeRepository = recipeRepository;
         this.mealPlanRepository = mealPlanRepository;
+    }
+    public Optional<MealPlanRecipe> findById(Long id) {
+        return mealPlanRecipeRepository.findById(id);
+    }
+    public boolean deleteById(Long id) {
+        Optional<MealPlanRecipe> recipe = mealPlanRecipeRepository.findById(id);
+        if (recipe.isPresent()) {
+            mealPlanRecipeRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
+    public MealPlanRecipe save(MealPlanRecipe mealPlanRecipe) {
+        return mealPlanRecipeRepository.save(mealPlanRecipe);
     }
 
     @Transactional

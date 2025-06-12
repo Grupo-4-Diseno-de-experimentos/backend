@@ -36,12 +36,10 @@ public class Recipe {
     private Macros macros;
 
     @ManyToMany
-    @JoinTable(
-            name = "recipe_ingredient",
-            joinColumns = @JoinColumn(name = "recipe_id"),
-            inverseJoinColumns = @JoinColumn(name = "ingredient_id")
-    )
     private List<Ingredient> ingredients;
+
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RecipeIngredient> recipeIngredient;
 
     public Recipe(){
 
@@ -66,12 +64,13 @@ public class Recipe {
         this.macros = new Macros(command.carbs(), command.protein(), command.fats());
         this.ingredients = ingredients;
     }
-    public void updateRecipeCommand(UpdateRecipeCommand command){
+    public void updateRecipeCommand(UpdateRecipeCommand command, List<Ingredient> ingredients){
         this.title = command.title();
         this.description = command.description();
         this.instructions = command.instructions();
         this.calories = command.calories();
         this.macros = new Macros(command.carbs(), command.protein(), command.fats());
+        this.ingredients = new ArrayList<>(ingredients);
     }
 
 

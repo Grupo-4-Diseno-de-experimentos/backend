@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import pe.edu.upc.trabajo.Trabajo.mealPlaner.application.internal.MealPlanRecipeService;
 import pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.commands.CreateMealPlanRecipeCommand;
 import pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.commands.CreateMealPlanRequest;
+import pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.commands.DeleteMealPlanCommand;
 import pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.entities.MealPlan;
 import pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.entities.MealPlanRecipe;
 import pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.queries.GetMealPlanRecipesByPlanIdQuery;
@@ -32,6 +33,27 @@ public class MealPlanRecipeController {
     public ResponseEntity<MealPlan> createPlan(@RequestBody CreateMealPlanRequest request) {
         MealPlan created = mealPlanRecipeService.createMealPlanWithRecipes(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<MealPlanRecipe> updateMealPlanRecipe(
+            @PathVariable Long id,
+            @RequestBody MealPlanRecipe updatedRecipe) {
+
+        Optional<MealPlanRecipe> existingOpt = mealPlanRecipeService.findById(id);
+        if (existingOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        MealPlanRecipe existing = existingOpt.get();
+
+        existing.setDay(updatedRecipe.getDay());
+        existing.setMealTime(updatedRecipe.getMealTime());
+        existing.setRecipe(updatedRecipe.getRecipe());
+        existing.setMealPlan(updatedRecipe.getMealPlan());
+
+        MealPlanRecipe saved = mealPlanRecipeService.save(existing);
+        return ResponseEntity.ok(saved);
     }
 
     @GetMapping("/{id}")

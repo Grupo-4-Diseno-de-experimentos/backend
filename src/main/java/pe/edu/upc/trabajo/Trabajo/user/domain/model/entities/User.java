@@ -25,6 +25,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    private Nutricionist nutricionist;
+
     public User(){
 
     }
@@ -40,7 +43,7 @@ public class User {
         this.lastName = command.lastName();
         this.email = command.email();
         this.password = command.password();
-        this.role = Role.USER;
+        this.role = command.role();
     }
 
     public Long getId() {
@@ -85,5 +88,17 @@ public class User {
 
     public Role getRole() {
         return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Nutricionist getNutricionist() {
+        return nutricionist;
+    }
+
+    public void setNutricionist(Nutricionist nutricionist) {
+        this.nutricionist = nutricionist;
     }
 }

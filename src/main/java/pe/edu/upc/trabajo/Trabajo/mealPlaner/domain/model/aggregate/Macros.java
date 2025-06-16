@@ -1,7 +1,6 @@
 package pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.aggregate;
 
 import jakarta.persistence.*;
-import pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.entities.Recipe;
 
 @Embeddable
 public class Macros {

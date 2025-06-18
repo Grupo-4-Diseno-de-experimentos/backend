@@ -40,9 +40,12 @@ public class UserController {
         if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Datos incorrectos");
         }
+
+        var userResource = UserResourceFromEntityAssembler.toResourceFromUser(user);
+
         Map<String, Object> response = new HashMap<>();
         response.put("message", "Login exitoso");
-        response.put("user", user);
+        response.put("user", userResource);
 
         return ResponseEntity.ok(response);
     }

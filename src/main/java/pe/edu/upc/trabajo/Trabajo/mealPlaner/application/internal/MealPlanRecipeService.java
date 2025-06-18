@@ -3,7 +3,6 @@ package pe.edu.upc.trabajo.Trabajo.mealPlaner.application.internal;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.commands.CreateMealPlanRecipeCommand;
 import pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.commands.CreateMealPlanRequest;
 import pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.entities.MealPlan;
 import pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.entities.MealPlanRecipe;
@@ -14,7 +13,6 @@ import pe.edu.upc.trabajo.Trabajo.mealPlaner.infrastructure.repositories.jpa.IMe
 import pe.edu.upc.trabajo.Trabajo.mealPlaner.infrastructure.repositories.jpa.IMealPlanRepository;
 import pe.edu.upc.trabajo.Trabajo.mealPlaner.infrastructure.repositories.jpa.IRecipeRepository;
 
-import java.time.DayOfWeek;
 import java.util.Optional;
 
 @Service

@@ -40,9 +40,12 @@ public class UserController {
         if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Datos incorrectos");
         }
+
+        var userResource = UserResourceFromEntityAssembler.toResourceFromUser(user);
+
         Map<String, Object> response = new HashMap<>();
         response.put("message", "Login exitoso");
-        response.put("user", user);
+        response.put("user", userResource);
 
         return ResponseEntity.ok(response);
     }
@@ -51,7 +54,10 @@ public class UserController {
     public ResponseEntity<List<UserResource>> getAllUsers() {
         var getAllUsersQuery = new GetAllUsersQuery();
         var users = userQueryService.handle(getAllUsersQuery);
-        var usersResources = users.stream().map(UserResourceFromEntityAssembler::toResourceFromEntity).toList();
+
+        var usersResources = users.stream()
+                .map(UserResourceFromEntityAssembler::toResourceFromUser)
+                .toList();
 
         return ResponseEntity.ok(usersResources);
     }

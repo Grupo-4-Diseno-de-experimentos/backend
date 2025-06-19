@@ -5,6 +5,6 @@ import pe.edu.upc.trabajo.Trabajo.user.interfaces.rest.resources.CreateUserResou
 
 public class CreateUserCommandFromResourceAssembler {
     public static RegisterUserCommand toCommandFromResource(CreateUserResource resource){
-        return new RegisterUserCommand(resource.name(), resource.lastname(), resource.email(), resource.password());
+        return new RegisterUserCommand(resource.name(), resource.lastName(), resource.email(), resource.password(),resource.role(), resource.code(), resource.description(), resource.specialties(), resource.yearsExperience());
     }
 }

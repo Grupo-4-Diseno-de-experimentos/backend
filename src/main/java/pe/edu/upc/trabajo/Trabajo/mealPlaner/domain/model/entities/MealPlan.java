@@ -1,5 +1,6 @@
 package pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -38,9 +39,11 @@ public class MealPlan {
     private Nutricionist nutricionist;
 
     @OneToMany(mappedBy = "mealPlan")
+    @JsonIgnore
     private List<CustomerMealPlan> customerMealPlans;
 
     @OneToMany(mappedBy = "mealPlan", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<MealPlanRecipe> mealPlanRecipes;
 
     public MealPlan(){
@@ -80,6 +83,10 @@ public class MealPlan {
         this.min_age = command.min_age();
         this.max_age = command.max_age();
         this.calories_per_d = command.calories_per_d();
+    }
+
+    public MealPlan(Long id){
+        this.id = id;
     }
 
 

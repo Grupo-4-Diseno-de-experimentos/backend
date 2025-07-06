@@ -1,5 +1,6 @@
 package pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.typeObject.Day;
 import pe.edu.upc.trabajo.Trabajo.mealPlaner.domain.model.typeObject.Mealtime;
@@ -22,6 +23,7 @@ public class MealPlanRecipe {
 
     @ManyToOne
     @JoinColumn(name = "meal_plan_id")
+    @JsonIgnore
     private MealPlan mealPlan;
 
     public MealPlanRecipe(){

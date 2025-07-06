@@ -11,6 +11,7 @@ import pe.edu.upc.trabajo.Trabajo.user.domain.model.commands.LoginCommand;
 import pe.edu.upc.trabajo.Trabajo.user.domain.model.entities.User;
 import pe.edu.upc.trabajo.Trabajo.user.domain.model.queries.GetAllUsersQuery;
 import pe.edu.upc.trabajo.Trabajo.user.domain.model.queries.GetUserByEmailAndPasswordQuery;
+import pe.edu.upc.trabajo.Trabajo.user.domain.model.queries.GetUserByIdQuery;
 import pe.edu.upc.trabajo.Trabajo.user.interfaces.rest.resources.CreateUserResource;
 import pe.edu.upc.trabajo.Trabajo.user.interfaces.rest.resources.UserResource;
 import pe.edu.upc.trabajo.Trabajo.user.interfaces.rest.transformers.CreateUserCommandFromResourceAssembler;
@@ -72,6 +73,18 @@ public class UserController {
         }
 
         return user.map(u -> new ResponseEntity<>(u, HttpStatus.CREATED)).orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getUserById(@PathVariable Long id) {
+        var getUserByIdQuery = new GetUserByIdQuery(id);
+        var userOptional = userQueryService.handle(getUserByIdQuery);
+
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
+        }
+
+        var userResource = UserResourceFromEntityAssembler.toResourceFromUser(userOptional.get());
+        return ResponseEntity.ok(userResource);
     }
 
     @DeleteMapping(value = "/{id}")
